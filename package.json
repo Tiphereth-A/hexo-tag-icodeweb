@@ -2,7 +2,7 @@
     "name": "hexo-tag-icodeweb",
     "description": "Including code from web",
     "version": "0.0.1",
-    "main": "main.js",
+    "main": "index.js",
     "author": "Tifa",
     "devDependencies": {
         "@babel/core": "^7.17.10",
