@@ -1,6 +1,8 @@
-"use strict";
+import { highlight } from "hexo-util";
+import fetch from "node-fetch";
+
 async function getCode(url) {
-  const response = await require('node-fetch')(url);
+  const response = await fetch(url);
   if (response.ok) {
     return await response.text();
   } else {
@@ -30,7 +32,7 @@ hexo.extend.tag.register(
 
     let url = getUrl(args[0], hexo.config.icodeweb.types, args[urlIndex]);
 
-    return require('hexo-util').highlight(getCode(url), { lang: lang });
+    return highlight(getCode(url), { lang: lang });
   },
   { async: true }
 );
