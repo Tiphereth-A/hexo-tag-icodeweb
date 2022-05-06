@@ -1,10 +1,7 @@
 "use strict";
 
-const icodeweb = require("./lib/icodeweb");
-let config = require("./lib/config");
-
 hexo.extend.tag.register(
     "icodeweb",
-    function (args) { return icodeweb(args, config(hexo)); },
+    require("./lib/icodeweb")(hexo),
     { async: true, }
 );
