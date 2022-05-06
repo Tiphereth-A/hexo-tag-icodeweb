@@ -1,7 +1,9 @@
 {
     "name": "hexo-tag-icodeweb",
+    "description": "Including code from web",
     "version": "0.0.1",
     "main": "src/index.js",
+    "author": "Tifa",
     "devDependencies": {
         "@types/hexo-util": "^0.6.4",
         "@types/node": "^17.0.31",
