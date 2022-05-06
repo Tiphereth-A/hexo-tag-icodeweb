@@ -22,12 +22,12 @@ module.exports = (hexo: any) => {
         const { config } = hexo;
 
         const webtype = args[0];
-        let startIndex = 1;
+        let urlIndex = 1;
         let lang = "text";
 
         if (args[1].startsWith("lang:")) {
             lang = args[1].substring(5);
-            startIndex = 2;
+            urlIndex = 2;
         }
 
         let URL = "";
@@ -35,10 +35,9 @@ module.exports = (hexo: any) => {
             if (iterator.name == webtype) {
                 URL += iterator.website + "/";
                 URL += (iterator.prefix || []).join("/");
-                for (let index = startIndex; index < args.length; index++) {
-                    URL += "/" + args[index];
-                }
+                URL += "/" + args[urlIndex] + "/";
                 URL += (iterator.suffix || []).join("/");
+                if (URL.endsWith("/")) URL.replace(/\/+$/, "");
                 break;
             }
         }

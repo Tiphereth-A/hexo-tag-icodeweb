@@ -1,5 +1,6 @@
 icodeweb:
-  - github:
-    website: 'https://raw.githubusercontent.com'
-    prefix:
-    suffix:
+  types:
+    - name: github
+      website: https://raw.githubusercontent.com
+      prefix:
+      suffix:

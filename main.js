@@ -1,7 +1,5 @@
-"use strict";
-
 hexo.extend.tag.register(
     "icodeweb",
-    require("./lib/icodeweb")(hexo),
+    require("./src/icodeweb")(hexo),
     { async: true, }
 );

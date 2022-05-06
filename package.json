@@ -2,9 +2,12 @@
     "name": "hexo-tag-icodeweb",
     "description": "Including code from web",
     "version": "0.0.1",
-    "main": "src/index.js",
+    "main": "main.js",
     "author": "Tifa",
     "devDependencies": {
+        "@babel/core": "^7.17.10",
+        "@babel/plugin-transform-runtime": "^7.17.10",
+        "@babel/preset-env": "^7.17.10",
         "@types/hexo-util": "^0.6.4",
         "@types/node": "^17.0.31",
         "typescript": "^4.6.4"
@@ -12,5 +15,18 @@
     "dependencies": {
         "hexo-log": "^3.0.0",
         "hexo-util": "^2.6.1"
-    }
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tiphereth-A/hexo-tag-icodeweb.git"
+    },
+    "keywords": [],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Tiphereth-A/hexo-tag-icodeweb/issues"
+    },
+    "homepage": "https://github.com/Tiphereth-A/hexo-tag-icodeweb#readme"
 }
