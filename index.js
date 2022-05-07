@@ -27,12 +27,16 @@ function getCode(url) {
   })
 }
 
-function getUrl(icwtype, icwtypes, urlMid) {
+function getTypeInfo(icwtype, icwtypes) {
   for (const iterator of icwtypes) {
     if (iterator.name === icwtype) {
-      return `${iterator.website.replace(/\/+$/g, "")}/${iterator.prefix ? iterator.prefix.join("/") + "/" : ""}${urlMid}${iterator.suffix ? "/" + iterator.suffix.join("/") : ""}`;
+      return iterator
     }
   }
+}
+
+function getUrl(typeinfo, urlMid) {
+  return `${typeinfo.website.replace(/\/+$/g, "")}/${typeinfo.prefix ? typeinfo.prefix.join("/") + "/" : ""}${urlMid}${typeinfo.suffix ? "/" + typeinfo.suffix.join("/") : ""}`;
 }
 
 hexo.extend.tag.register(
@@ -47,7 +51,15 @@ hexo.extend.tag.register(
       urlIndex = 2;
     }
 
-    return getCode(getUrl(args[0], hexo.config.icodeweb.types, args[urlIndex])).then((code) => highlight(code, { lang: lang }));
+    const icwTypeInfo = getTypeInfo(args[0], hexo.config.icodeweb.types)
+
+    return getCode(getUrl(icwTypeInfo, args[urlIndex])).then(
+      (code) => {
+        const finalCode = (icwTypeInfo.codehead || "") + code
+        if (hexo.config.highlight.enable) return highlight(finalCode, { lang: lang });
+        return hexo.render.render({ text: finalCode, engine: "markdown" });
+      }
+    );
   },
   { async: true }
 );
