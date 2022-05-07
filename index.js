@@ -1,13 +1,30 @@
-import { highlight } from "hexo-util";
-import fetch from "node-fetch";
+const highlight = require("hexo-util").highlight;
+const http = require('http');
+const https = require('https');
 
-async function getCode(url) {
-  const response = await fetch(url);
-  if (response.ok) {
-    return await response.text();
-  } else {
-    return Promise.reject(`${response.status} ${response.statusText}`);
+function getCode(url) {
+  const client = url.startsWith('https') ? https : http;
+  const options = {
+    headers: {
+      'User-Agent': 'Hexo'
+    }
   }
+  return new Promise((resolve, reject) => {
+    const req = client.request(url, options, (res) => {
+      if (res.statusCode < 200 || res.statusCode >= 400) {
+        reject(new Error(`Fetching ${url} returned status code ${res.statusCode} ${res.statusMessage}.`));
+      }
+      const chunks = [];
+      res.on('error', (e) => reject(e));
+      res.on('data', (c) => chunks.push(c));
+      res.on('end', () => {
+        const allChunks = Buffer.concat(chunks).toString();
+        resolve(allChunks);
+      });
+    });
+
+    req.end();
+  })
 }
 
 function getUrl(icwtype, icwtypes, urlMid) {
@@ -30,9 +47,7 @@ hexo.extend.tag.register(
       urlIndex = 2;
     }
 
-    let url = getUrl(args[0], hexo.config.icodeweb.types, args[urlIndex]);
-
-    return highlight(getCode(url), { lang: lang });
+    return getCode(getUrl(args[0], hexo.config.icodeweb.types, args[urlIndex])).then((code) => highlight(code, { lang: lang }));
   },
   { async: true }
 );
