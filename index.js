@@ -2,6 +2,8 @@ const http = require("http");
 const https = require("https");
 
 let highlight, prismHighlight;
+let log = hexo.log;
+const pkgName = 'hexo-tag-icodeweb'
 
 function getCode(url) {
     const client = url.startsWith("https") ? https : http;
@@ -13,11 +15,9 @@ function getCode(url) {
     return new Promise((resolve, reject) => {
         const req = client.request(url, options, (res) => {
             if (res.statusCode < 200 || res.statusCode >= 400) {
-                reject(
-                    new Error(
-                        `Fetching ${url} returned status code ${res.statusCode} ${res.statusMessage}.`
-                    )
-                );
+                const errMsg = `Fetching ${url} returned status code ${res.statusCode} ${res.statusMessage}.`
+                log.error(`${pkgName}: ` + errMsg);
+                reject(new Error(errMsg));
             }
             const chunks = [];
             res.on("error", (e) => reject(e));
@@ -38,6 +38,9 @@ function getTypeInfo(icwtype, icwtypes) {
             return iterator;
         }
     }
+    const errMsg = `unknown type name: ${icwtype}`
+    log.error(`${pkgName}: ` + errMsg)
+    throw errMsg
 }
 
 const rSlashBk = /\/+$/g;
@@ -54,10 +57,15 @@ const rTo = /\s*to:(\d+)/i;
 hexo.extend.tag.register(
     "icodeweb",
     function (args) {
-        if (!args[0]) return;
-        const icwTypeInfo = getTypeInfo(args[0], hexo.config.icodeweb.types);
+        let icwtype = args[0]
+        if (!icwtype) {
+            log.warn(`${pkgName}: no type detected with {${args}}`)
+            return;
+        }
+        const icwCfg = hexo.config.icodeweb.types || {};
+        const icwTypeInfo = getTypeInfo(icwtype, icwCfg);
 
-        let arg = args.join(' ').replace(args[0], '');
+        let arg = args.join(' ').replace(icwtype, '');
 
         let lang = '';
         arg = arg.replace(rLang, (match, _lang) => {
@@ -86,15 +94,20 @@ hexo.extend.tag.register(
         const hljsCfg = hexo.config.highlight || {};
         const prismjsCfg = hexo.config.prismjs || {};
 
+        log.debug(`${pkgName}: ready to get code from ${url} at {${icwtype}:${arg}}`)
         return getCode(url).then(code => {
-            if (!code) return;
+            if (!code) {
+                log.warn(`${pkgName}: no code found with {${icwtype}:${arg}}`)
+                return;
+            }
 
             const lines = code.split('\n');
             code = (icwTypeInfo.codehead || "") + lines.slice(from, to).join('\n').trim();
 
+            log.debug(`${pkgName}: ready to render {${icwtype}:${arg}} with lang:${lang}, from:${from}, to:${to}`)
+
             if (prismjsCfg.enable) {
-                const line_threshold = prismjsCfg.line_threshold
-                    ? prismjsCfg.line_threshold : 0;
+                const line_threshold = prismjsCfg.line_threshold ? prismjsCfg.line_threshold : 0;
 
                 const prismjsOptions = {
                     lang,
@@ -104,8 +117,10 @@ hexo.extend.tag.register(
                     isPreprocess: prismjsCfg.preprocess
                 };
 
-                if (!prismHighlight) prismHighlight = require('hexo-util').prismHighlight;
-
+                if (!prismHighlight) {
+                    log.info(`${pkgName}: use prism as renderer`);
+                    prismHighlight = require('hexo-util').prismHighlight;
+                }
                 return prismHighlight(code, prismjsOptions);
             } else if (hljsCfg.enable) {
                 const line_threshold = hljsCfg.line_threshold
@@ -119,8 +134,10 @@ hexo.extend.tag.register(
                     tab: hljsCfg.tab_replace
                 };
 
-                if (!highlight) highlight = require('hexo-util').highlight;
-
+                if (!highlight) {
+                    log.info(`${pkgName}: use highlight as renderer`);
+                    highlight = require('hexo-util').highlight;
+                }
                 return highlight(code, hljsOptions);
             }
 
