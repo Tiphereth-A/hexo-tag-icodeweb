@@ -1,9 +1,9 @@
+const pkgName = 'hexo-tag-icodeweb'
 const http = require("http");
 const https = require("https");
 
 let highlight, prismHighlight;
 let log = hexo.log;
-const pkgName = 'hexo-tag-icodeweb'
 
 function getCode(url) {
     const client = url.startsWith("https") ? https : http;
