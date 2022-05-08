@@ -1,7 +1,0 @@
-icodeweb:
-  types:
-    - name: github
-      website: https://raw.githubusercontent.com
-      prefix:
-      suffix:
-      codehead: "From GitHub"

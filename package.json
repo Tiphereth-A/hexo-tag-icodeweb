@@ -1,19 +1,21 @@
 {
-  "name": "hexo-tag-icodeweb",
-  "description": "Including code from web",
-  "version": "0.0.1",
-  "main": "index.js",
-  "author": "Tifa",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tiphereth-A/hexo-tag-icodeweb.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/Tiphereth-A/hexo-tag-icodeweb/issues"
-  },
-  "homepage": "https://github.com/Tiphereth-A/hexo-tag-icodeweb#readme"
+    "name": "hexo-tag-icodeweb",
+    "description": "Including code from web",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Tifa",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tiphereth-A/hexo-tag-icodeweb.git"
+    },
+    "keywords": [
+        "Hexo"
+    ],
+    "bugs": {
+        "url": "https://github.com/Tiphereth-A/hexo-tag-icodeweb/issues"
+    },
+    "homepage": "https://github.com/Tiphereth-A/hexo-tag-icodeweb#readme"
 }
