@@ -1,6 +1,8 @@
 const http = require("http");
 const https = require("https");
 
+let highlight, prismHighlight;
+
 function getCode(url) {
     const client = url.startsWith("https") ? https : http;
     const options = {
@@ -74,7 +76,7 @@ hexo.extend.tag.register(
         });
 
         lang = lang || 'text';
-        arg = arg.strip();
+        arg = arg.trim();
         const url = getUrl(icwTypeInfo, arg);
 
         const argSplit = arg.split('/')
