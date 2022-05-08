@@ -6,7 +6,7 @@
 
 ![GitHub](https://img.shields.io/github/license/Tiphereth-A/hexo-tag-icodeweb)
 
-Including code from any website, modified from <https://github.com/hexojs/hexo/blob/master/lib/plugins/tag/include_code.js> and <https://github.com/zbicin/hexo-github-include>
+Including code from any website in your Hexo posts, modified from <https://github.com/hexojs/hexo/blob/master/lib/plugins/tag/include_code.js> and <https://github.com/zbicin/hexo-github-include>
 
 ## Installation
 
