@@ -1,6 +1,12 @@
 # hexo-tag-icodeweb
 
-Including code from any website
+![npm](https://img.shields.io/npm/v/hexo-tag-icodeweb)
+![npms.io (final)](https://img.shields.io/npms-io/final-score/hexo-tag-icodeweb)
+![npm](https://img.shields.io/npm/dy/hexo-tag-icodeweb)
+
+![GitHub](https://img.shields.io/github/license/Tiphereth-A/hexo-tag-icodeweb)
+
+Including code from any website, modified from <https://github.com/hexojs/hexo/blob/master/lib/plugins/tag/include_code.js> and <https://github.com/zbicin/hexo-github-include>
 
 ## Installation
 

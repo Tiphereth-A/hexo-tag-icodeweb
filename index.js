@@ -9,7 +9,7 @@ function getCode(url) {
     const client = url.startsWith("https") ? https : http;
     const options = {
         headers: {
-            "User-Agent": "Hexo",
+            "User-Agent": pkgName,
         },
     };
     return new Promise((resolve, reject) => {
