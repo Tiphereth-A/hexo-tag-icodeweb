@@ -1,7 +1,6 @@
 # hexo-tag-icodeweb
 
 ![npm](https://img.shields.io/npm/v/hexo-tag-icodeweb)
-![npms.io (final)](https://img.shields.io/npms-io/final-score/hexo-tag-icodeweb)
 ![npm](https://img.shields.io/npm/dy/hexo-tag-icodeweb)
 
 ![GitHub](https://img.shields.io/github/license/Tiphereth-A/hexo-tag-icodeweb)
@@ -33,3 +32,30 @@ icodeweb:
       suffix:
       codehead:
 ```
+
+For example:
+
+```yaml Hexo config file
+icodeweb:
+  lang_default: plaintext
+  types:
+    - name: icwexample
+      lang_default: cpp
+      website: https://raw.githubusercontent.com
+      prefix:
+        - Tiphereth-A
+        - Tiphereth-A.github.io
+        - gh-pages
+        - code
+      suffix:
+        - .cpp
+      codehead: "// example"
+```
+
+Then you can write
+
+```plaintext
+{% icodeweb icwexample about/init %}
+```
+
+to include <https://raw.githubusercontent.com/Tiphereth-A/Tiphereth-A.github.io/gh-pages/code/about/init.cpp> into your posts
