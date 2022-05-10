@@ -50,6 +50,7 @@ function getUrl(typeinfo, urlMid) {
         }${urlMid}${typeinfo.suffix ? "/" + typeinfo.suffix.join("/") : ""}`;
 }
 
+const rTitle = /\s*title:(\w+)/i;
 const rLang = /\s*lang:(\w+)/i;
 const rFrom = /\s*from:(\d+)/i;
 const rTo = /\s*to:(\d+)/i;
@@ -67,6 +68,11 @@ hexo.extend.tag.register(
 
         let arg = args.join(' ').replace(icwtype, '');
 
+        let title = '';
+        arg = arg.replace(rTitle, (match, _title) => {
+            title = _title;
+            return '';
+        });
         let lang = '';
         arg = arg.replace(rLang, (match, _lang) => {
             lang = _lang;
@@ -83,12 +89,14 @@ hexo.extend.tag.register(
             return '';
         });
 
-        lang = lang || 'text';
+
         arg = arg.trim();
         const url = getUrl(icwTypeInfo, arg);
 
+        lang = lang || 'text';
         const argSplit = arg.split('/')
-        const title = argSplit[argSplit.length - 1] || 'Code'
+        title = title || argSplit[argSplit.length - 1]
+
         const caption = `<span>${title}</span><a href="${url}">view raw</a>`;
 
         const hljsCfg = hexo.config.highlight || {};
@@ -97,14 +105,14 @@ hexo.extend.tag.register(
         log.debug(`${pkgName}: ready to get code from ${url} at {${icwtype}:${arg}}`)
         return getCode(url).then(code => {
             if (!code) {
-                log.warn(`${pkgName}: no code found with {${icwtype}:${arg}}`)
+                log.warn(`${pkgName}: no code found in ${url}`)
                 return;
             }
 
             const lines = code.split('\n');
             code = (icwTypeInfo.codehead || "") + lines.slice(from, to).join('\n').trim();
 
-            log.debug(`${pkgName}: ready to render {${icwtype}:${arg}} with lang:${lang}, from:${from}, to:${to}`)
+            log.debug(`${pkgName}: ready to render {${icwtype}:${arg}} with title:${title}, lang:${lang}, from:${from}, to:${to}`)
 
             if (prismjsCfg.enable) {
                 const line_threshold = prismjsCfg.line_threshold ? prismjsCfg.line_threshold : 0;

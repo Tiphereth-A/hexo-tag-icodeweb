@@ -14,7 +14,7 @@ Including code from any website in your Hexo posts, modified from <https://githu
 
 ## Usage
 
-`{% icodeweb type [lang:language] [from:line] [to:line] path/to/file %}`
+`{% icodeweb type [title:title] [lang:language] [from:line] [to:line] path/to/file %}`
 
 Usage of `lang`, `from` and `to` is same as [include_code Tag in Hexo](https://hexo.io/docs/tag-plugins.html#Include-Code)
 
