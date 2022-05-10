@@ -94,7 +94,7 @@ hexo.extend.tag.register(
         const url = getUrl(icwTypeInfo, arg);
 
         lang = lang || icwTypeInfo.lang_default || hexo.config.icodeweb.lang_default || 'plaintext';
-        title = title || arg.match(rSlashLast)[1]
+        title = title || arg.match(rSlashLast)[1] || 'Code'
 
         const caption = `<span>${title}</span><a href="${url}">view raw</a>`;
 
