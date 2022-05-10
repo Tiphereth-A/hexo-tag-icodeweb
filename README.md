@@ -24,8 +24,10 @@ Config like this:
 
 ```yaml Hexo config file
 icodeweb:
+  lang_default:
   types:
     - name: # type name
+      lang_default:
       website: # website
       prefix:
       suffix:

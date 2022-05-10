@@ -54,6 +54,7 @@ const rTitle = /\s*title:(\w+)/i;
 const rLang = /\s*lang:(\w+)/i;
 const rFrom = /\s*from:(\d+)/i;
 const rTo = /\s*to:(\d+)/i;
+const rSlashLast = /\/([^\/]+?)$/i
 
 hexo.extend.tag.register(
     "icodeweb",
@@ -89,13 +90,11 @@ hexo.extend.tag.register(
             return '';
         });
 
-
         arg = arg.trim();
         const url = getUrl(icwTypeInfo, arg);
 
-        lang = lang || 'text';
-        const argSplit = arg.split('/')
-        title = title || argSplit[argSplit.length - 1]
+        lang = lang || icwTypeInfo.lang_default || hexo.config.icodeweb.lang_default || 'plaintext';
+        title = title || arg.match(rSlashLast)[1]
 
         const caption = `<span>${title}</span><a href="${url}">view raw</a>`;
 
