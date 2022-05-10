@@ -50,7 +50,7 @@ function getUrl(typeinfo, urlMid) {
         }${urlMid}${typeinfo.suffix ? "/" + typeinfo.suffix.join("/") : ""}`;
 }
 
-const rTitle = /\s*title:(\w+)/i;
+const rTitle = /\s*title:([\w\-]+)/i;
 const rLang = /\s*lang:(\w+)/i;
 const rFrom = /\s*from:(\d+)/i;
 const rTo = /\s*to:(\d+)/i;
